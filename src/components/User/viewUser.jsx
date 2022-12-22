@@ -7,12 +7,15 @@ import MaterialTable from "material-table";
 import { Link } from "react-router-dom";
 import { httpClient } from "../../constants/httpClient";
 import Swal from "sweetalert2";
-import InsertRecord from "../landingPage/outlayDesign";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 import "./user.css"
 
 function Viewuser(props) {
   const [userdata, setuserdata] = useState([]);
   const [ProductData, setProductData] = useState([]);
+  
   
   const userapi = async () => {
     httpClient.apiCall("", "GET", "products")
@@ -26,6 +29,45 @@ function Viewuser(props) {
     props.history.push("/useredit", rowData);
   };
 
+  const handleView=(rowdata)=>{
+    console.log(rowdata);
+    
+new Swal({
+  customClass: 'swal-wide',
+  html:`
+  <img src=${rowdata.thumbnail} alt="image" class="popup_image"/>
+  <div class="sub_image_popup">
+
+<img src=${rowdata.images[1]} alt="image" class="subimages"/>
+<img src=${rowdata.images[2]} alt="image" class="subimages"/>
+<img src=${rowdata.images[3]} alt="image" class="subimages"/>
+
+<div class="subimage>
+<img src=${rowdata.thumbnail} alt="image" />
+</div>
+  </div>
+  <h1 class="description">Description</h1>
+  
+                    <div class="left_side_popup">
+<h4 class="popup_title"> <b> Title: </b> <i>${rowdata.title}</i></h4>
+<h4 class="popup_title"><b>Brand:</b> <i> ${rowdata.brand}</i></h4>
+<h4 class="popup_title"><b>Category:</b> <i>${rowdata.category}</i></h4>
+<h4 class="popup_title"><b>Discount:</b> <i>${rowdata.discountPercentage} %</i></h4>
+                    </div>
+                    <div class="right_side_popup">
+                    <h4 class="popup_title"><b>Rating:</b> <i>${rowdata.rating}</i></h4>
+                    <h4 class="popup_title"><b>Stock:</b> <i>${rowdata.stock}</i></h4>
+                    <h4 class="popup_title"><b>Price:</b> <i>${rowdata.price}</i></h4>
+                    
+                    </div>
+                    
+
+
+
+                        `,
+ })
+
+  }
   const handleDelete = (e, rowData) => {
     console.log(rowData);
     let id = rowData.id;
@@ -49,7 +91,7 @@ function Viewuser(props) {
             let newProduct=ProductData.filter((value)=>value.id!=del_id)
             setProductData(newProduct)
             // setTimeout(() => {
-            //   userapi();
+            //   userapi(); 
             // });
           })
           .catch((err) => {
@@ -69,15 +111,15 @@ function Viewuser(props) {
     <div className="details_user">
       
       <div className="heading_line">
-        <h2 className="text04">User</h2>
+        <h2 className="text04">Product</h2>
       </div>
 
       <div className="buttons-line">
         <Link to="../Dashboard">
-          <button className="btn-details">User Detail</button>
+          <button className="btn-details">Product Detail</button>
         </Link>
         <button className="btn-details" id="btn-selected">
-          User View
+          Product View
         </button>
       </div>
       <Row className="rows-branch">
@@ -105,7 +147,7 @@ function Viewuser(props) {
               },
               maxBodyHeight: "400px",
             }}
-            title="User"
+            title="Product"
             columns={[
               { title: "S.N", render: (rowData) => rowData.tableData.id + 1 },
               { title: 'Image', field: 'thumbnail', render: rowData => <img src={rowData.thumbnail} style={{width: "58%" ,height:"50px", borderRadius: '50%'}}/> },
@@ -134,16 +176,25 @@ function Viewuser(props) {
             actions={[
               {
                 icon: Add,
-                tooltip: "Add User",
+                tooltip: "Add Product",
                 isFreeAction: true,
               },
               {
+                icon: ()=> <i class="fa-sharp fa-solid fa-eye fa-xs" ></i>,
+                tooltip: "View Product",
+                onClick: (e, rowData) => {
+                  handleView(rowData);
+                },
+              },
+
+              {
                 icon: Edit,
-                tooltip: "Edit User",
+                tooltip: "Edit Products",
                 onClick: (e, rowData) => {
                   handleEdit(e, rowData);
                 },
               },
+              
               {
                 icon: Delete,
                 tooltip: "Delete Record",
@@ -155,6 +206,7 @@ function Viewuser(props) {
           />
         </Col>
       </Row>
+      
     </div>
   );
 }

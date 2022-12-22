@@ -1,7 +1,7 @@
 import React from 'react'
 import "./insertrecord.scss"
 import { useHistory } from 'react-router-dom'
-import reactlogo from "../../assets/images/react.gif"
+import reactlogo from "../../assets/images/react2.gif"
 import Insertform from './insertForm'
 function Outlaydesign() {
     let history=useHistory()

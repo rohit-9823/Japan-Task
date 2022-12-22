@@ -14,8 +14,44 @@
     /* background-color: red; */
     margin-left: 10px;
     position: absolute;
-    left: 14%;
+    left: 13%;
     width: 84%;
     top: 80px;
     
+}
+.popup_image{
+    width: 80%;
+    border-radius: 10px;
+    height: 200px;
+    
+}
+
+.left_side_popup{
+    float: left;
+width: 50%;
+}
+
+.subimages{
+    width: 30%;
+    height: 90px;
+    border-radius: 10px;
+    
+}
+.swal-wide{
+    width:650px !important;
+}
+.popup_title{
+    padding: 10px;
+    font: inherit;
+    
+}
+b{
+    font-weight: bolder;
+}
+i{
+    font-style: italic  ;
+}
+.description{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

@@ -6,7 +6,8 @@ $hover_color: #4d62d6;
 //     text-align: right;
 // }
 .navbars{
-background-color: $background_color;
+background-color: rgb(239, 239, 239);
+
 padding: 25px;
 text-align: right;
 width: 84.7%;
@@ -20,7 +21,7 @@ left: 12%;
     text-align: justify;
     justify-content: right;
     cursor: pointer ;
-    color: white;
+    color: black;
     
 
 }
@@ -28,17 +29,18 @@ left: 12%;
     background-color: $hover_color;
     border-radius: 10px;
     transition: 0.5s ;
+    color: white;
 }
 .navbar_logo{
     
     position: absolute;
     top: 2px;
     left: 10px;
-    width: 5%;
+    width: 8%;
     height: 65px;
 }
 .sidebar{
-    background-color: rgb(245, 241, 241);
+    background-color: $background_color;
     height: 783px;
     float: left;
     width: 12%;
@@ -53,10 +55,12 @@ left: 12%;
     padding: 18px;
     margin-top: 10px;
     text-align: left;
+    color: rgb(224, 224, 224);
 }
 .sidebar_items:hover {
 background-color: rgb(255, 255, 255);
-
+color: black;
+transition: 0.5s;
 }
 .sidebar_icon{
     margin-right: 10px;
@@ -177,4 +181,7 @@ background-color: rgb(255, 255, 255);
     padding: 18px 25px;
     border: none;
   }
-  
+  .imageload{
+    width: 60%;
+    height: 150px;
+  }
