@@ -7,34 +7,32 @@ import MaterialTable from "material-table";
 import { Link } from "react-router-dom";
 import { httpClient } from "../../constants/httpClient";
 import Swal from "sweetalert2";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
-import "./user.css"
+import "./user.css";
 
 function Viewuser(props) {
   const [userdata, setuserdata] = useState([]);
   const [ProductData, setProductData] = useState([]);
-  
-  
+
   const userapi = async () => {
-    httpClient.apiCall("", "GET", "products")
-    .then((res)=>{
-      setProductData(res.data.products)
-      console.log(res);
-    })
+    httpClient.apiCall("", "GET", "products").then((res) => {
+      setProductData(res.data.products);
+      
+    });
   };
 
   const handleEdit = (e, rowData) => {
-    props.history.push("/useredit", rowData);
+    props.history.push("/Dashboard", rowData);
   };
 
-  const handleView=(rowdata)=>{
+  const handleView = (rowdata) => {
     console.log(rowdata);
-    
-new Swal({
-  customClass: 'swal-wide',
-  html:`
+
+    new Swal({
+      customClass: "swal-wide",
+      html: `
   <img src=${rowdata.thumbnail} alt="image" class="popup_image"/>
   <div class="sub_image_popup">
 
@@ -65,9 +63,8 @@ new Swal({
 
 
                         `,
- })
-
-  }
+    });
+  };
   const handleDelete = (e, rowData) => {
     console.log(rowData);
     let id = rowData.id;
@@ -83,15 +80,15 @@ new Swal({
     }).then((result) => {
       if (result.isConfirmed) {
         httpClient
-          .apiCall(" ","DELETE",`products/${id}`)
+          .apiCall(" ", "DELETE", `products/${id}`)
           .then((resp) => {
             notify.success(resp.data.message);
-            console.log(resp.data.id);
-            let del_id=resp.data.id;
-            let newProduct=ProductData.filter((value)=>value.id!=del_id)
-            setProductData(newProduct)
+            console.log(resp);
+            let del_id = resp.data.id;
+            let newProduct = ProductData.filter((value) => value.id != del_id);
+            setProductData(newProduct);
             // setTimeout(() => {
-            //   userapi(); 
+            //   userapi();
             // });
           })
           .catch((err) => {
@@ -103,13 +100,12 @@ new Swal({
   };
 
   useEffect(() => {
-    console.log(props);
+    
     userapi();
   }, []);
   const tableRef = React.createRef();
   return (
     <div className="details_user">
-      
       <div className="heading_line">
         <h2 className="text04">Product</h2>
       </div>
@@ -150,7 +146,20 @@ new Swal({
             title="Product"
             columns={[
               { title: "S.N", render: (rowData) => rowData.tableData.id + 1 },
-              { title: 'Image', field: 'thumbnail', render: rowData => <img src={rowData.thumbnail} style={{width: "58%" ,height:"50px", borderRadius: '50%'}}/> },
+              {
+                title: "Image",
+                field: "thumbnail",
+                render: (rowData) => (
+                  <img
+                    src={rowData.thumbnail}
+                    style={{
+                      width: "58%",
+                      height: "50px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                ),
+              },
               { title: "Title", field: "title" },
               { title: "Brand", field: "brand" },
               { title: "Category", field: "category" },
@@ -180,7 +189,7 @@ new Swal({
                 isFreeAction: true,
               },
               {
-                icon: ()=> <i class="fa-sharp fa-solid fa-eye fa-xs" ></i>,
+                icon: () => <i class="fa-sharp fa-solid fa-eye fa-xs"></i>,
                 tooltip: "View Product",
                 onClick: (e, rowData) => {
                   handleView(rowData);
@@ -194,7 +203,7 @@ new Swal({
                   handleEdit(e, rowData);
                 },
               },
-              
+
               {
                 icon: Delete,
                 tooltip: "Delete Record",
@@ -206,7 +215,6 @@ new Swal({
           />
         </Col>
       </Row>
-      
     </div>
   );
 }

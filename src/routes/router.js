@@ -11,8 +11,8 @@ export default function Router() {
         {
           Routes.map((item)=>{
             return item.type==="public"?
-            <PublicRoute exact component={item.component} path={item.path}></PublicRoute>:
-            <ProtectedRoute exact component={item.component} path={item.path}></ProtectedRoute>
+            <PublicRoute exact key={item.path} component={item.component} path={item.path}></PublicRoute>:
+            <ProtectedRoute exact key={item.path}component={item.component} path={item.path}></ProtectedRoute>
         })
         }
         </Switch>

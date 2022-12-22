@@ -26,34 +26,34 @@ export default function Insertform(props) {
     description: "",
   });
   const [loadings, setloadings] = useButtonLoader("Submit", "Submitting");
-  const [propsavailable, setpropsavailable] = useState();
-  const [images, setimages] = useState([]);
-  const [Imagevalue, setImagevalue] = useState([]);
-  const [reader, setreader] = useState([]);
+  const [propsavailable, setpropsavailable] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
-  
+  checkProps();
   }, []);
 
+  const checkProps=()=>{
+    
+    if(props?.location?.state){
+      setpropsavailable(true)
+      setdatas({
+        title: props.location.state.title,
+      brand: props.location.state.brand,
+      category: props.location.state.category,
+      discount: props.location.state.discountPercentage,
+      price: props.location.state.price,
+      rating: props.location.state.rating,
+      stock: props.location.state.stock,
+      description: props.location.state.description,
+      })
+     }
+    
+  }
   
   const ref = useRef(null);
 
-  const handeimage = (event, allvalues) => {
-    setimages(URL.createObjectURL(event.target.files[0]));
-    const file = event.target.files[0];
-    setImagevalue(file);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setreader({ preview: reader.result });
-    };
-    reader.readAsDataURL(file);
-
-    // setimages(URL.createObjectURL(event.target.files[0]));
-    // let files = event.target.files[0];
-    // setImagevalue(files);
-  };
-
+  
   return (
     <div className="details_user">
       <div className="heading_line">
@@ -89,6 +89,17 @@ export default function Insertform(props) {
             stock: value.stock,
           };
 
+{propsavailable?
+  httpClient
+            .apiCall(createProduct, "PUT", `products/${props.location.state.id}`)
+            .then((res) => {
+              notify.success(`Record Successfully Updated`);
+              console.log("Updated Record::::",res.data);
+              setloadings(false);
+              history.push('./viewuser')
+            })
+             :
+  
           httpClient
             .apiCall(createProduct, "POST", "products/add")
             .then((res) => {
@@ -96,6 +107,7 @@ export default function Insertform(props) {
               setloadings(false);
               resetForm({ createProduct: " " });
             });
+          }
         }}
       >
         {({ errors, touched }) => (
@@ -113,7 +125,7 @@ export default function Insertform(props) {
                   <div className="error-message">{errors.title}</div>
                 ) : null}
               </div>
-              {propsavailable ? null : (
+              
                 <div>
                   <label>Brand</label>
                   <Field
@@ -126,7 +138,6 @@ export default function Insertform(props) {
                   ) : null}
                   
                 </div>
-              )}
               <div>
                 <label>Description</label>
                 <Field
@@ -151,7 +162,7 @@ export default function Insertform(props) {
                   <div className="error-message">{errors.category}</div>
                 ) : null}
               </div>
-              {propsavailable ? null : (
+              
                 <div>
                   <label>Discount</label>
                   <Field
@@ -163,7 +174,7 @@ export default function Insertform(props) {
                     <div className="error-message">{errors.discount}</div>
                   ) : null}
                 </div>
-              )}
+              
               <div>
                 <label>Price</label>
                 <Field
@@ -188,7 +199,7 @@ export default function Insertform(props) {
                   <div className="error-message">{errors.rating}</div>
                 ) : null}
               </div>
-              {propsavailable ? null : (
+              
                 <div>
                   <label>Stock</label>
                   <Field
@@ -200,7 +211,7 @@ export default function Insertform(props) {
                     <div className="error-message">{errors.stock}</div>
                   ) : null}
                 </div>
-              )}
+              
               {/* <div>
                         <label>Thumbnail</label>
                         <input type="file" name="thumbnail" id="" 

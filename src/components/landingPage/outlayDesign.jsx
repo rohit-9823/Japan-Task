@@ -17,7 +17,7 @@ function Outlaydesign() {
             <a className="navbar_item"  onClick={handleNotFound}  >Service</a>
         </nav>
         <div className="sidebar">
-            <h2 style={{padding:"20px"}}>Dashboard</h2>
+            <h2 style={{padding:"20px",textAlign:"center"}}>CLOCO</h2>
             <hr/>
             <ul>
             <li className='sidebar_items' onClick={()=>history.push('/Dashboard')}><i className=" sidebar_icon fa-solid fa-plus" ></i>Add Record</li> 
