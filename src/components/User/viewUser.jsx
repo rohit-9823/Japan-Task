@@ -12,10 +12,14 @@ import "./user.css"
 
 function Viewuser(props) {
   const [userdata, setuserdata] = useState([]);
-  const [time, setTime] = useState(new Date());
+  const [ProductData, setProductData] = useState([]);
   
   const userapi = async () => {
-    httpClient.apiCall("", "GET", "products");
+    httpClient.apiCall("", "GET", "products")
+    .then((res)=>{
+      setProductData(res.data.products)
+      console.log(res);
+    })
   };
 
   const handleEdit = (e, rowData) => {
@@ -24,7 +28,7 @@ function Viewuser(props) {
 
   const handleDelete = (e, rowData) => {
     console.log(rowData);
-    let id = rowData.ID;
+    let id = rowData.id;
 
     Swal.fire({
       title: "Are you sure?",
@@ -37,13 +41,16 @@ function Viewuser(props) {
     }).then((result) => {
       if (result.isConfirmed) {
         httpClient
-          .DELETE(`api-delete/company/${id}`, false, true)
+          .apiCall(" ","DELETE",`products/${id}`)
           .then((resp) => {
             notify.success(resp.data.message);
-            console.log(resp);
-            setTimeout(() => {
-              userapi();
-            });
+            console.log(resp.data.id);
+            let del_id=resp.data.id;
+            let newProduct=ProductData.filter((value)=>value.id!=del_id)
+            setProductData(newProduct)
+            // setTimeout(() => {
+            //   userapi();
+            // });
           })
           .catch((err) => {
             console.log(err.response);
@@ -101,21 +108,17 @@ function Viewuser(props) {
             title="User"
             columns={[
               { title: "S.N", render: (rowData) => rowData.tableData.id + 1 },
-              { title: "Name", field: "NAME" },
-              { title: "Description", field: "DESCRIPTION" },
-              {
-                title: "Status",
-                field: "STATUS",
-                cellStyle: (e, rowData) => {
-                  if (rowData.STATUS == "Active") {
-                    return { color: "#32CD32" };
-                  } else {
-                    return { color: "red" };
-                  }
-                },
-              },
+              { title: 'Image', field: 'thumbnail', render: rowData => <img src={rowData.thumbnail} style={{width: "58%" ,height:"50px", borderRadius: '50%'}}/> },
+              { title: "Title", field: "title" },
+              { title: "Brand", field: "brand" },
+              { title: "Category", field: "category" },
+              // { title: "Description", field: "description" },
+              { title: "Discount (%)", field: "discountPercentage" },
+              { title: "Price", field: "price" },
+              { title: "Rating", field: "rating" },
+              { title: "Stock", field: "stock" },
             ]}
-            data={userdata}
+            data={ProductData}
             localization={{
               pagination: {
                 previousAriaLabel: "",

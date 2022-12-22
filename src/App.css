@@ -4,9 +4,10 @@
   font-style: normal;
   font-weight: 400;
   margin: 0;
-  
-  
 }
+  /* *::-webkit-scrollbar {
+    display: none;
+  } */
 
 .App {
   text-align: center;

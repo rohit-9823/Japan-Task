@@ -16,6 +16,10 @@ export const httpClient = {
         });
         return result;
       }
+      else if (method == "DELETE") {
+        result = await axiosInstance.get(url);
+        return result;
+      }
     } catch (err) {
       toast.error(err.response.data.message, {
         position: toast.POSITION.BOTTOM_RIGHT,
