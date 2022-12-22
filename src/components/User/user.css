@@ -1,0 +1,21 @@
+.rows-branch{
+    
+    width: 99%;
+    display: block;
+    padding: 10px;
+    /* margin: 2% auto */
+}
+.heading_line{
+    
+    padding: 10px;
+    /* margin: 20px; */
+}
+.details_user{
+    /* background-color: red; */
+    margin-left: 10px;
+    position: absolute;
+    left: 15%;
+    width: 84%;
+    top: 100px;
+    
+}

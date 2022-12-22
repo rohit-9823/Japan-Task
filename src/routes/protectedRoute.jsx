@@ -1,0 +1,21 @@
+import { Route } from "react-router";
+import Outlaydesign from "../components/landingPage/outlayDesign";
+
+
+
+export const ProtectedRoute = ({ component: Component, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={(routeProps) => {
+          return(
+            <div>
+                
+                <Component {...routeProps}></Component>
+                
+            </div>
+          );
+        }}
+      ></Route>
+    );
+  };
