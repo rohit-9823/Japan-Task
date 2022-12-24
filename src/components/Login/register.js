@@ -9,27 +9,6 @@ import "./register.css";
 import { notify } from "../../constants/notify";
 
 
-
-const initialValues={
-  username: "",
-  password: "",
-  mobileNumber: "",
-  fullName: "",
-  address: "",
-  confirmPassword:""
-}
-// let schema = yup.object().shape({
-//   username: yup.string().email("Must be a valid email").required("Email is a required field").min(8,'Password is too short-should be 8 chars minimum.'),
-//   password: yup.string().required("Password  is a required field"),
-//   mobileNumber: yup.string().required("Mobile Number is a required field"),
-//   fullName: yup.string().required("Full name is a required field"),
-//   address:yup.string().required("Address is a required field"),
-//   confirmPassword:string().required("Confirm password is a required field").test('passwords-match','Passwords must match', function(value){
-//     return this.parent.password === value
-//   })
-// });
-
-
 function Register(props) {
 
   const [loadings, setloadings] = useButtonLoader("Sign up", " ");
@@ -61,6 +40,7 @@ function Register(props) {
         onSubmit={async (values) => {
           
           let registerDetails = {
+            id:parseInt(Date.now() * Math.random()).toString(),
             username: values.username,
             password: values.password,
             confirmPassword: values.confirmPassword,

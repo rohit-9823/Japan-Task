@@ -39,21 +39,11 @@ function Viewuser(props) {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        httpClient
-          .apiCall(" ", "DELETE", `products/${id}`)
-          .then((resp) => {
-            notify.success(resp.data.message);
-            console.log(resp);
-            let del_id = resp.data.id;
-            let newProduct = ProductData.filter((value) => value.id != del_id);
-            setProductData(newProduct);
-            // setTimeout(() => {
-            //   userapi();
-            // });
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
+        let new_Value=userdata.filter((values)=>values.id!==id)
+        setuserdata(new_Value)
+        localStorage.clear();
+        localStorage.setItem("UserDetails",JSON.stringify(new_Value))
+
         Swal.fire("Deleted!", "Your Record has been deleted.", "success");
       }
     });
