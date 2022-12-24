@@ -57,13 +57,18 @@ export default function Insertform(props) {
   return (
     <div className="details_user">
       <div className="heading_line">
+        {propsavailable?
+        <h2 className="text04">Edit Product</h2>
+ :
+        
         <h2 className="text04">Product</h2>
+}
       </div>
 
       <div className="buttons-line">
         <button className="btn-details">Product Detail</button>
 
-        <Link to="./viewuser">
+        <Link to="./viewproduct">
           <button className="btn-details" id="btn-selected">
             Product View
           </button>
@@ -96,7 +101,7 @@ export default function Insertform(props) {
               notify.success(`Record Successfully Updated`);
               console.log("Updated Record::::",res.data);
               setloadings(false);
-              history.push('./viewuser')
+              history.push('./viewproduct')
             })
              :
   

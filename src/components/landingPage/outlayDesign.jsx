@@ -20,9 +20,10 @@ function Outlaydesign() {
             <h2 style={{padding:"20px",textAlign:"center"}}>CLOCO</h2>
             <hr/>
             <ul>
-            <li className='sidebar_items' onClick={()=>history.push('/Dashboard')}><i className=" sidebar_icon fa-solid fa-plus" ></i>Add Record</li> 
+            <li className='sidebar_items' onClick={()=>history.push('/insertuser')}><i className=" sidebar_icon fa-solid fa-user"></i>User</li> 
+            <li className='sidebar_items' onClick={()=>history.push('/Dashboard')}><i className=" sidebar_icon fa-brands fa-product-hunt"></i>Product</li> 
             <li className='sidebar_items' onClick={handleNotFound} > <i className=" sidebar_icon fa-sharp fa-solid fa-gear"></i>Settings</li>
-            <li className='sidebar_items' onClick={()=>history.push('/')}><i class="fa-solid fa-right-from-bracket sidebar_icon"></i> Logout</li>
+            <li className='sidebar_items' onClick={()=>history.push('/')}><i className="fa-solid fa-right-from-bracket sidebar_icon sidebar_icon"></i> Logout</li>
             </ul>
         </div>
         {/* <Insertform/> */}

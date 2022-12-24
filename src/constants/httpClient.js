@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import axiosInstance from "./api";
 export const httpClient = {
+  
   apiCall: async (data, method, url) => {
     try {
       let result = null;
