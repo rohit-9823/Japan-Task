@@ -8,23 +8,18 @@ import { Link, useHistory } from "react-router-dom";
 // import "./insertrecord.scss";
 import { notify } from "../../constants/notify";
 import SignupVerify from "../../validation/signupVerify";
+import InsertUserVerify from "../../validation/insertUserVerify";
 export default function Insertuser(props) {
   const [datas, setdatas] = useState({
     id: "",
     username: "",
     password: "",
-    confirmPassword: "",
   });
   const [loadings, setloadings] = useButtonLoader("Submit", "Submitting");
   const [propsavailable, setpropsavailable] = useState(false);
   const [propsdata, setpropsdata] = useState([]);
-  const [filtervalue, setfiltervalue] = useState([]);
-  const [showhide2, setshowhide2] = useState(false);
   const [showhide, setshowhide] = useState(false);
 
-  const showhidePassword2 = () => {
-    setshowhide2(!showhide2);
-  };
   const showhidePassword = () => {
     setshowhide(!showhide);
   };
@@ -36,7 +31,6 @@ export default function Insertuser(props) {
 
   let history = useHistory();
   let cls = showhide ? "fas fa-eye" : "fas fa-eye-slash";
-  let cls2 = showhide2 ? "fas fa-eye" : "fas fa-eye-slash";
 
   const checkProps = () => {
     if (props?.location?.state) {
@@ -51,8 +45,6 @@ export default function Insertuser(props) {
       setpropsdata(final_value);
     }
   };
-
-  const ref = useRef(null);
 
   return (
     <div className="details_user">
@@ -78,36 +70,48 @@ export default function Insertuser(props) {
         // innerRef={ref}
         enableReinitialize
         initialValues={datas}
-        // validationSchema={SignupVerify}
+        validationSchema={InsertUserVerify}
         onSubmit={async (value, { resetForm }) => {
-          console.log(value);
           setloadings(true);
+          
+
           let createUser = {
+            id: parseInt(Date.now() * Math.random()).toString(),
             username: value.username,
             password: value.password,
-            confirmPassword: value.confirmPassword,
-            state: true,
           };
-          let old_Data;
 
-          if(propsavailable)
-{
-    let filter_Data= propsdata.filter((values) => 
-     values.id == value.id ? values.username=value.username && values.password==value.password:null
-   )
-   console.log(filter_Data);
-   
-}
-else{
-  (old_Data = JSON.parse(localStorage.getItem("UserDetails")));
-  old_Data.push(createUser);
-  localStorage.setItem("UserDetails", JSON.stringify(old_Data));
-  // localStorage.setItem("UserDetails",JSON.stringify(registerDetails))
-  notify.success("Account Created Successfully");
-  setloadings(false);
-  resetForm({ createUser: " " });
-} 
-          
+          let old_Data;
+          let newvalue_obj;
+
+          if (propsavailable) {
+            let newdata = propsdata.map((values) =>
+              values.id == value.id
+                ? (newvalue_obj = {
+                    id: datas.id,
+                    username: value.username,
+                    password: value.password,
+                  })
+                : values
+            );
+            localStorage.clear();
+            localStorage.setItem("UserDetails", JSON.stringify(newdata));
+            notify.success("Account Updated Successfully");
+            setloadings(false);
+            history.push('./viewuser')
+          } else {
+            old_Data = JSON.parse(localStorage.getItem("UserDetails"));
+            // console.log("old dataa",old_Data);
+            //  old_Data.map((values)=>
+            //   values.username==createUser.username ? notify.error("err"))
+
+            old_Data.push(createUser);
+            localStorage.setItem("UserDetails", JSON.stringify(old_Data));
+            // localStorage.setItem("UserDetails",JSON.stringify(registerDetails))
+            notify.success("Account Created Successfully");
+            setloadings(false);
+            resetForm({ createUser: " " });
+          }
         }}
       >
         {({ errors, touched }) => (
@@ -149,30 +153,6 @@ else{
                   <div className="error-message">{errors.password}</div>
                 ) : null}
               </div>
-              {propsavailable ? null : (
-                <div>
-                  <label>Confirm Password</label>
-                  <Field
-                    name="confirmPassword"
-                    type={showhide2 ? "text" : "password"}
-                    placeholder="Confirm Password"
-                    className={`form-control shadow-none register-input ${
-                      errors.confirmPassword &&
-                      touched.confirmPassword &&
-                      "is-invalid"
-                        ? "redborder"
-                        : null
-                    } `}
-                  />
-                  <i class={cls2} id="eyespan" onClick={showhidePassword2}></i>
-
-                  {errors.confirmPassword && touched.confirmPassword ? (
-                    <div className="error-message">
-                      {errors.confirmPassword}
-                    </div>
-                  ) : null}
-                </div>
-              )}
             </div>
             <div className="cu-sbutton">
               <button

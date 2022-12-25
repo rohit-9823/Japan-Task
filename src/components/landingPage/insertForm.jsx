@@ -51,7 +51,6 @@ export default function Insertform(props) {
     
   }
   
-  const ref = useRef(null);
 
   
   return (

@@ -5,7 +5,6 @@ import * as yup from "yup"
 import { useHistory } from 'react-router-dom';
 import {httpClient} from "../../constants/httpClient"
 import { notify } from '../../constants/notify';
-import { toast } from "react-toastify";
 import "./Loginstyle.css";
 import Loginverify from "../../validation/loginVerify";
 import useButtonLoader from "../../constants/btn_Loader";
@@ -14,7 +13,7 @@ import login_img from "../../assets/images/login.png"
 function Login(props) {
   
   
-  const [loadings, setloadings] = useButtonLoader("Login", " ");
+  const [loadings, setloadings] = useButtonLoader("Login", "Loading");
   const [showhide, setshowhide] = useState(false);
 
   const showhidePassword = () => {
@@ -29,21 +28,6 @@ function Login(props) {
   }, []);
  
   let cls = showhide ? "fas fa-eye" : "fas fa-eye-slash";
-
-const login=(values)=>{
-    console.log("values are",values)
-    httpClient.UPLOAD("POST","oauth/token",values,"password")
-    .then(resp=>{
-      localStorage.setItem("user",resp)
-      notify.success("Login success")
-      history.push("/")
-    })
-    .catch(err=>{
-      notify.error("Failed")
-      console.log("error occurred",err)
-    })
-  }
-
 
   return (
     <div className="container login_container">
@@ -70,7 +54,7 @@ const login=(values)=>{
               }}
               validationSchema={Loginverify}
               onSubmit={async (values) => {
-                
+                setloadings(true)
                 let loginDetails = {
                   username: values.username,
                   password: values.password,
@@ -93,7 +77,7 @@ const login=(values)=>{
                 
                       notify.success("Login success")
                       setloadings(false)
-                      history.push('./Dashboard')
+                      history.push('./insertuser')
                       show_message=false
                                 }
                   })}
@@ -187,28 +171,7 @@ const login=(values)=>{
                     ref={loadings}
                   ></button>
 
-                    {/* <Button
-                      onClick={() => {  
-                        setIsButtonLoading(true);
-                        // setTimeout(() => {
-                        //   setIsButtonLoading(false);
-                        // }, 2000);
-                      }
-                    }
-                      isLoading={isButtonLoading}
-                      type="submit"
-                      class="btn btn-primary"
-                      style={{ float: "right",backgroundColor:'#3f51b5' }}
-                    >
-                      <span
-                        style={{
-                          margin: "auto",
-                          display: "table",
-                          border: "0px solid red",
-                        }}
-                      ></span>{" "}
-                      Login
-                    </Button> */}
+                    
                   </div>
                   <div className="signup">
                   <p className="signup_p">Don't have an account yet? <b className="signup_create" onClick={()=>history.push('/register')}>Create one</b></p>

@@ -34,7 +34,6 @@ function Register(props) {
           username: "",
           password: "",
           confirmPassword: "",
-          state: true,
         }}
         validationSchema={SignupVerify}
         onSubmit={async (values) => {
@@ -43,8 +42,7 @@ function Register(props) {
             id:parseInt(Date.now() * Math.random()).toString(),
             username: values.username,
             password: values.password,
-            confirmPassword: values.confirmPassword,
-            state: values.state,
+            // confirmPassword: values.confirmPassword,
           };
           console.log(registerDetails);
           if(!localStorage.getItem("UserDetails")){

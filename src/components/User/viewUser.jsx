@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import Typography from "@material-ui/core/Typography";
 import { Edit, Add, Delete } from "@material-ui/icons";
 import MaterialTable from "material-table";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { httpClient } from "../../constants/httpClient";
 import Swal from "sweetalert2";
 
@@ -13,15 +13,26 @@ import "./user.css";
 function Viewuser(props) {
   const [userdata, setuserdata] = useState([]);
   const [ProductData, setProductData] = useState([]);
-
+let history=useHistory()
   const userapi = async () => {
     let get_Data=localStorage.getItem("UserDetails",[])
+    if(!get_Data){
+      history.push('/')
+      notify.error("Create Account")
+    }
+    else{
     let final_value=JSON.parse(get_Data)
     setuserdata(final_value)
+    }
   };
 
   const handleEdit = (e, rowData) => {
-    props.history.push("/insertuser", rowData);
+    let pass_Value={
+      id:rowData.id,
+      username:rowData.username,
+      password:rowData.password
+    }
+    props.history.push("/insertuser", pass_Value);
   };
 
   
@@ -43,7 +54,6 @@ function Viewuser(props) {
         setuserdata(new_Value)
         localStorage.clear();
         localStorage.setItem("UserDetails",JSON.stringify(new_Value))
-
         Swal.fire("Deleted!", "Your Record has been deleted.", "success");
       }
     });
@@ -93,7 +103,7 @@ function Viewuser(props) {
               },
               maxBodyHeight: "400px",
             }}
-            title="Product"
+            title="User"
             columns={[
               { title: "S.N", render: (rowData) => rowData.tableData.id + 1 },
               { title: "Username", field: "username" },
