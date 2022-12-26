@@ -1,9 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
 import { Form, Formik,ErrorMessage,Field } from 'formik';
-import * as yup from "yup"
 import { useHistory } from 'react-router-dom';
-import {httpClient} from "../../constants/httpClient"
 import { notify } from '../../constants/notify';
 import "./Loginstyle.css";
 import Loginverify from "../../validation/loginVerify";
@@ -62,10 +59,6 @@ function Login(props) {
                 };  
                 console.log(loginDetails.username);
                 
-                
-                  // {localData.map((datas)=>{
-                  //   if()
-                  // })}
 
 
                 let data=JSON.parse(localStorage.getItem("UserDetails"))

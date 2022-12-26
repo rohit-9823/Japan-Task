@@ -2,12 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Formik, ErrorMessage } from "formik";
 import { Form, Field } from "formik";
-import { httpClient } from "../../constants/httpClient";
 import useButtonLoader from "../../constants/btn_Loader";
 import { Link, useHistory } from "react-router-dom";
-// import "./insertrecord.scss";
 import { notify } from "../../constants/notify";
-import SignupVerify from "../../validation/signupVerify";
 import InsertUserVerify from "../../validation/insertUserVerify";
 export default function Insertuser(props) {
   const [datas, setdatas] = useState({

@@ -5,14 +5,10 @@ import Typography from "@material-ui/core/Typography";
 import { Edit, Add, Delete } from "@material-ui/icons";
 import MaterialTable from "material-table";
 import { Link, useHistory } from "react-router-dom";
-import { httpClient } from "../../constants/httpClient";
 import Swal from "sweetalert2";
-
-import "./user.css";
 
 function Viewuser(props) {
   const [userdata, setuserdata] = useState([]);
-  const [ProductData, setProductData] = useState([]);
 let history=useHistory()
   const userapi = async () => {
     let get_Data=localStorage.getItem("UserDetails",[])

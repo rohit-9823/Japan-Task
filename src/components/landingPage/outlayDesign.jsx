@@ -3,7 +3,7 @@ import "./insertrecord.scss"
 import { useHistory } from 'react-router-dom'
 import reactlogo from "../../assets/images/react2.gif"
 import logos from "../../assets/images/logos.png"
-import Insertform from './insertForm'
+import Insertform from '../Product/insertForm'
 function Outlaydesign() {
     let history=useHistory()
     const handleNotFound=()=>{
@@ -13,7 +13,7 @@ function Outlaydesign() {
     <div>
         <nav className='navbars'>
             <img src={reactlogo} alt="Logo" className='navbar_logo' /> 
-            <a className="navbar_item" href="./Dashboard">Home</a>
+            <a className="navbar_item" onClick={()=>history.push('/Dashboard')}>Home</a>
             <a className="navbar_item"  onClick={handleNotFound} >About</a>
             <a className="navbar_item"  onClick={handleNotFound}  >Service</a>
         </nav>

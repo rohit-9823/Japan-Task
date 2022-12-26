@@ -1,4 +1,4 @@
-import Insertform from "../components/landingPage/insertForm"
+import Insertform from "../components/Product/insertForm"
 import InsertRecord from "../components/landingPage/outlayDesign"
 import Login from "../components/Login/login"
 import Register from "../components/Login/register"
